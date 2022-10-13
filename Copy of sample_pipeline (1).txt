@@ -1,0 +1,27 @@
+pipeline {
+    agent { label 'slave-linux' }
+     tools{
+        maven 'maven1'
+        //jdk 'jdk-1.8'
+        }
+    stages {
+        stage ('SCM') {
+            steps {
+                sh '''
+                    pwd && rm -rf *
+                    git clone https://github.com/jabedhasan21/java-hello-world-with-maven.git
+                '''
+            }
+        }
+        stage("build") {
+            steps {
+                sh '''
+                    cd java-hello-world-with-maven
+                    //mvn clean //For commenting
+                    mvn clean install -Dmaven.test.skip=true
+                '''
+
+            }     
+	    }   
+	}
+}
